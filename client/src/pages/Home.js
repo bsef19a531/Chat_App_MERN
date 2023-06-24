@@ -19,8 +19,8 @@ const Home = () => {
 
                 <Tabs fontFamily='Open Sans'>
                     <TabList mb='1em'>
-                        <Tab _selected={{ color: 'white', bg: '#23BF83' }} w='50%'>Login</Tab>
-                        <Tab _selected={{ color: 'white', bg: '#669FF2' }} w='50%'>SignUp</Tab>
+                        <Tab _selected={{ color: 'white', bg: '#23BF83' }} w='50%' borderRadius='lg'>Login</Tab>
+                        <Tab _selected={{ color: 'white', bg: '#669FF2' }} w='50%' borderRadius='lg'>SignUp</Tab>
                     </TabList>
 
                     <TabPanels>

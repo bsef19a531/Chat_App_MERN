@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const connectDB = require('./config/dbConfig');
+const userRoutes = require('./routes/userRoutes');
 
 const app = express();
 // Load env vars
@@ -10,13 +11,12 @@ connectDB();
 //Setting Port
 const PORT = process.env.PORT || 3030;
 
-app.get('/api/v1/chat', (req, res) => {
+app.get('/', (req, res) => {
     res.send('API is running...');
 });
 
-app.get('/api/v1/chat:id', (req, res) => {
-    res.send('API is running...');
-});
+// Routes 
+app.use('/api/v1/users', userRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}...`);

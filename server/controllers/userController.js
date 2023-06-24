@@ -1,10 +1,12 @@
 const asyncHandler = require('express-async-handler');
 const generateToken = require('../config/tokenGenerator');
-
+const User = require('../models/userModel');
 
 const registerUser = asyncHandler(async (req, res) => {
 
     const { name, email, password, picture } = req.body;
+
+    // console.log(req.body);
 
     if (!name || !email || !password) {
         res.status(400);
@@ -44,9 +46,14 @@ const loginUser = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
 
-    if (!user || !(await user.matchPassword(password))) {
+    if (!user) {
         res.status(401);
-        throw new Error('Invalid email or password');
+        throw new Error('Invalid Email Address');
+    }
+
+    if (await user.matchPassword(password)) {
+        res.status(401);
+        throw new Error('Invalid Password');
     }
 
     res.json({

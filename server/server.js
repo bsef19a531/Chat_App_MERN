@@ -10,6 +10,8 @@ dotenv.config();
 connectDB();
 //Setting Port
 const PORT = process.env.PORT || 3030;
+// Accept JSON data in the body
+app.use(express.json());
 
 app.get('/', (req, res) => {
     res.send('API is running...');

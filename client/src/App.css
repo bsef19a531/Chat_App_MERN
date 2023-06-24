@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Kanit&family=Open+Sans:wght@600&family=Righteous&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Kanit&family=Montserrat+Alternates:ital,wght@0,100;1,100&family=Montserrat+Subrayada:wght@700&family=Open+Sans:wght@600&family=Righteous&display=swap');
+/* 
+
+font-family: 'Abril Fatface', cursive;
+font-family: 'Kanit', sans-serif;
+font-family: 'Montserrat Alternates', sans-serif;
+font-family: 'Montserrat Subrayada', sans-serif;
+font-family: 'Open Sans', sans-serif;
+font-family: 'Righteous', cursive;
+*/
+
+
+.App {
+    display: flex;
+    min-height: 100vh;
+    background-image: url(./imgs/background.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    font-family: 'Open Sans', sans-serif;
+}

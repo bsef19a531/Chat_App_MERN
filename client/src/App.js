@@ -5,12 +5,12 @@ import Chat from './pages/Chat';
 
 function App() {
   return (
-
-    <div className="App">
-      <Route exact path="/" component={Home} />
-      <Route exact path="/chat" component={Chat} />
-      Hello
-    </div>
+    <>
+      <div className="App">
+        <Route exact path="/" component={Home} />
+        <Route exact path="/chat" component={Chat} />
+      </div>
+    </>
   );
 }
 

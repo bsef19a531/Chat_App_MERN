@@ -1,5 +1,5 @@
-#23BF83
-#EAF0F7
-#6B5D5E
-#1C1B2C
-#669FF2
+#23BF83  //Green
+#EAF0F7  //White gray
+#6B5D5E  //Ganda Color gray redish
+#1C1B2C  // Dark color
+#669FF2  //Blue sky

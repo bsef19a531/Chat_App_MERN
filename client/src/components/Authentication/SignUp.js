@@ -63,10 +63,50 @@ const SignUp = () => {
 
     const submitHandler = async () => {
         setLoading(true);
-        console.log(name, email, password, confirmPassword, pic);
-        if (email === '' || password === '' || confirmPassword === '' || name === '' || pic === '') {
+        // console.log(name, email, password, confirmPassword, pic);
+
+        if (name === '') {
             toast({
-                title: 'Please Fill All Fields',
+                title: 'Please Fill your Name',
+                position: 'top',
+                status: 'warning',
+                duration: 5000,
+                isClosable: true,
+            });
+
+            setLoading(false);
+            return;
+        }
+
+        if (email === '') {
+            toast({
+                title: 'Please Fill Email',
+                position: 'top',
+                status: 'warning',
+                duration: 5000,
+                isClosable: true,
+            });
+
+            setLoading(false);
+            return;
+        }
+
+        if (password === '') {
+            toast({
+                title: 'Please Fill Password',
+                position: 'top',
+                status: 'warning',
+                duration: 5000,
+                isClosable: true,
+            });
+
+            setLoading(false);
+            return;
+        }
+
+        if (confirmPassword === '') {
+            toast({
+                title: 'Please Re-Enter Password in Confirm Password Field',
                 position: 'top',
                 status: 'warning',
                 duration: 5000,

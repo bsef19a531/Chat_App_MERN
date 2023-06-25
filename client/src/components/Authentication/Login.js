@@ -27,7 +27,7 @@ const Login = () => {
                 <FormControl isRequired>
                     <FormLabel>Password</FormLabel>
                     <InputGroup>
-                        <Input focusBorderColor='#23BF83' placeholder="Enter Password" onChange={(e) => { setPassword(e.target.value) }} variant='flushed' />
+                        <Input focusBorderColor='#23BF83' type={show ? "text" : "password"} placeholder="Enter Password" onChange={(e) => { setPassword(e.target.value) }} variant='flushed' />
                         <InputRightElement>
                             <Button bg='#e1e7eb' h='1.75em' size='sm' onClick={() => { setShow(!show) }}>
                                 {show ? <ViewOffIcon /> : <ViewIcon />}
@@ -48,4 +48,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default Login    

@@ -147,7 +147,7 @@ const SignUp = () => {
                 <FormControl isRequired>
                     <FormLabel>Password</FormLabel>
                     <InputGroup>
-                        <Input placeholder="Enter Password" onChange={(e) => { setPassword(e.target.value) }} variant='flushed' />
+                        <Input placeholder="Enter Password" type={show ? "text" : "password"} onChange={(e) => { setPassword(e.target.value) }} variant='flushed' />
                         <InputRightElement>
                             <Button bg='#e1e7eb' h='1.75em' size='sm' onClick={() => { setShow(!show) }}>
                                 {show ? <ViewOffIcon /> : <ViewIcon />}
@@ -161,7 +161,7 @@ const SignUp = () => {
                 <FormControl isRequired>
                     <FormLabel>Confirm Password</FormLabel>
                     <InputGroup>
-                        <Input placeholder="ReEnter Password" onChange={(e) => { setConfirmPassword(e.target.value) }} variant='flushed' />
+                        <Input placeholder="ReEnter Password" type={show ? "text" : "password"} onChange={(e) => { setConfirmPassword(e.target.value) }} variant='flushed' />
                         <InputRightElement>
                             <Button bg='#e1e7eb' h='1.75em' size='sm' onClick={() => { setShow(!show) }}>
                                 {show ? <ViewOffIcon /> : <ViewIcon />}

@@ -14,9 +14,9 @@ const PORT = process.env.PORT || 3030;
 // Accept JSON data in the body
 app.use(express.json());
 
-app.get('/', (req, res) => {
-    res.send('API is running...');
-});
+// app.get('/', (req, res) => {
+//     res.send('API is running...');
+// });
 
 // Routes 
 app.use('/api/v1/users', userRoutes);

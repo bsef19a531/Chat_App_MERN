@@ -1,7 +1,9 @@
 import React from 'react';
-import { Grid, GridItem, FormControl, FormLabel, Input, InputGroup, InputRightElement, Button } from '@chakra-ui/react';
+import { Grid, GridItem, FormControl, FormLabel, Input, InputGroup, InputRightElement, Button, Toast, useToast } from '@chakra-ui/react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { useState } from 'react';
+import axios from 'axios';
+import { useHistory } from 'react-router';
 
 
 const SignUp = () => {
@@ -11,8 +13,119 @@ const SignUp = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [pic, setPic] = useState('');
     const [show, setShow] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const toast = useToast();
+    const history = useHistory();
 
-    const submitHandler = () => { }
+    const imageUpload = (pic) => {
+        setLoading(true);
+        if (pic === undefined) {
+            Toast({
+                title: 'No Image Selected',
+                position: 'top',
+                status: 'warning',
+                duration: 5000,
+                isClosable: true,
+            });
+            return;
+        }
+
+        console.log(pic);
+
+        if (pic.type === 'image/jpeg' || pic.type === 'image/png') {
+            const data = new FormData();
+            data.append('file', pic);
+            data.append('upload_preset', 'Inbox-Chat-App');
+            data.append('cloud_name', 'mohammad-abdullah');
+            fetch('https://api.cloudinary.com/v1_1/mohammad-abdullah/image/upload', {
+                method: 'post',
+                body: data
+            }).then(res => res.json())
+                .then(data => {
+                    setPic(data.url);
+                    setLoading(false);
+                }).catch(err => {
+                    console.log(err);
+                    setLoading(false);
+                }
+                )
+        } else {
+            Toast({
+                title: 'Invalid File Type',
+                position: 'top',
+                status: 'error',
+                duration: 5000,
+                isClosable: true,
+            });
+            setLoading(false);
+        }
+    }
+
+    const submitHandler = async () => {
+        setLoading(true);
+        console.log(name, email, password, confirmPassword, pic);
+        if (email === '' || password === '' || confirmPassword === '' || name === '' || pic === '') {
+            Toast({
+                title: 'Please Fill All Fields',
+                position: 'top',
+                status: 'warning',
+                duration: 5000,
+                isClosable: true,
+            });
+
+            setLoading(false);
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            Toast({
+                title: 'Password Does Not Match',
+                position: 'top',
+                status: 'warning',
+                duration: 5000,
+                isClosable: true,
+            });
+            setLoading(false);
+            return;
+        }
+
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json'
+
+                }
+            }
+            const { data } = await axios.post('http://localhost:3030/api/v1/users', { name, email, password, pic }, config);
+            console.log(data);
+            toast({
+                title: 'User Registered Successfully',
+                position: 'top',
+                status: 'success',
+                duration: 5000,
+                isClosable: true,
+            });
+
+            localStorage.setItem('userInfo', JSON.stringify(data));
+            setLoading(false);
+            history.push('/chats');
+        }
+        catch (err) {
+            toast({
+                title: 'Error occured while registering user, Try Again',
+                description: err.response.data.message,
+                position: 'top',
+                status: 'error',
+                duration: 5000,
+                isClosable: true,
+            });
+            setLoading(false);
+
+        }
+
+    }
+
+
 
     return (
         <Grid w='100%' templateRows='repeat(2, 1fr)' gap={4}>
@@ -65,7 +178,7 @@ const SignUp = () => {
                         type='file'
                         p={1.5}
                         accept='image/png, image/jpeg'
-                        onChange={() => { }} />
+                        onChange={(e) => { imageUpload(e.target.files[0]) }} />
                 </FormControl>
             </GridItem>
 
@@ -74,10 +187,12 @@ const SignUp = () => {
                     _hover={{ bg: '#669FF2', color: 'white' }}
                     _active={{ bg: '#669FF2', color: 'white' }}
                     onClick={submitHandler}
+                    isLoading={loading}
                 >SignUp</Button>
             </GridItem>
         </Grid>
     )
 }
+
 
 export default SignUp

@@ -2,6 +2,9 @@ const mongoose = require('mongoose');
 
 const connectDB = async () => {
     let connStr = process.env.CONNECTION_STR.replace('<password>', process.env.DB_PASSWORD);
+    let dbName = process.env.DB_NAME;
+    connStr = connStr.replace('<dbname>', dbName);
+    // console.log(connStr);
 
     try {
         const conn = await mongoose.connect(connStr, {

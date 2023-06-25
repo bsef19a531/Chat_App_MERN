@@ -56,6 +56,7 @@ const loginUser = asyncHandler(async (req, res) => {
         throw new Error('Invalid Password');
     }
 
+
     res.json({
         _id: user._id,
         name: user.name,

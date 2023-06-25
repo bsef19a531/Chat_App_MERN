@@ -1,10 +1,15 @@
 const express = require('express');
 const dotenv = require('dotenv');
+const cors = require('cors');
 const connectDB = require('./config/dbConfig');
 const userRoutes = require('./routes/userRoutes');
 const { notFound, errorHandler } = require('./middlewares/errorMiddleware');
 
 const app = express();
+
+// CORS
+app.use(cors());
+
 // Load env vars
 dotenv.config();
 //Database connection

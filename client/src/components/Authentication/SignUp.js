@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, GridItem, FormControl, FormLabel, Input, InputGroup, InputRightElement, Button, Toast, useToast } from '@chakra-ui/react';
+import { Grid, GridItem, FormControl, FormLabel, Input, InputGroup, InputRightElement, Button, useToast } from '@chakra-ui/react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { useState } from 'react';
 import axios from 'axios';
@@ -20,7 +20,7 @@ const SignUp = () => {
     const imageUpload = (pic) => {
         setLoading(true);
         if (pic === undefined) {
-            Toast({
+            toast({
                 title: 'No Image Selected',
                 position: 'top',
                 status: 'warning',
@@ -50,7 +50,7 @@ const SignUp = () => {
                 }
                 )
         } else {
-            Toast({
+            toast({
                 title: 'Invalid File Type',
                 position: 'top',
                 status: 'error',
@@ -65,7 +65,7 @@ const SignUp = () => {
         setLoading(true);
         console.log(name, email, password, confirmPassword, pic);
         if (email === '' || password === '' || confirmPassword === '' || name === '' || pic === '') {
-            Toast({
+            toast({
                 title: 'Please Fill All Fields',
                 position: 'top',
                 status: 'warning',
@@ -78,7 +78,7 @@ const SignUp = () => {
         }
 
         if (password !== confirmPassword) {
-            Toast({
+            toast({
                 title: 'Password Does Not Match',
                 position: 'top',
                 status: 'warning',
@@ -172,7 +172,7 @@ const SignUp = () => {
             </GridItem>
 
             <GridItem rowSpan={1}>
-                <FormControl isRequired>
+                <FormControl>
                     <FormLabel>Profile Picture</FormLabel>
                     <Input
                         type='file'

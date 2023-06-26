@@ -15,10 +15,19 @@ import SideDrawer from './SideDrawer';
 import { BellIcon, ChevronDownIcon } from '@chakra-ui/icons';
 import { ChatState } from '../context/chatProvider';
 import ProfileModal from './ProfileModal';
+import { useHistory } from 'react-router-dom';
 
 const NavBar = () => {
 
+    const history = useHistory();
+
     const { user } = ChatState();
+    const logoutHandler = () => {
+        localStorage.removeItem('userInfo');
+        history.push('/');
+    }
+
+
 
     return (
         <Box bg='#EAF0F7' w='100%' h='60px' p={4} display="flex" justifyContent="space-between" alignItems="center" position="sticky" top={0} zIndex="sticky" mb='5px' >
@@ -42,7 +51,7 @@ const NavBar = () => {
                             </MenuItem>
                         </ProfileModal>
                         <MenuDivider />
-                        <MenuItem>Logout</MenuItem>
+                        <MenuItem onClick={logoutHandler}>Logout</MenuItem>
                     </MenuList>
                 </Menu>
             </div>

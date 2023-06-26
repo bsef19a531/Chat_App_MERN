@@ -51,9 +51,16 @@ const loginUser = asyncHandler(async (req, res) => {
         throw new Error('Invalid Email Address');
     }
 
-    if (await user.matchPassword(password)) {
+    // if (await user.matchPassword(password)) {
+    //     res.status(401);
+    //     throw new Error('Invalid Password');
+    // }
+
+
+    const isPasswordCorrect = await user.matchPassword(password);
+    if (!isPasswordCorrect) {
         res.status(401);
-        throw new Error('Invalid Password');
+        throw new Error('Invalids Password');
     }
 
 

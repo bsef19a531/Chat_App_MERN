@@ -24,63 +24,6 @@ import { useState, useRef } from 'react'
 import { ChatState } from '../context/chatProvider'
 import axios from 'axios'
 
-//Dummy Data
-const users = [
-    {
-        name: 'John Doe',
-        pic: 'https://bit.ly/dan-abramov',
-        email: 'abc@example.com'
-    },
-    {
-        name: 'Jane Doe',
-        email: 'abc@example.com'
-    },
-    {
-        name: 'John Smith',
-        pic: 'https://bit.ly/dan-abramov',
-        email: 'abc@example.com'
-    },
-    {
-        name: 'Jane Smith',
-        pic: 'https://bit.ly/dan-abramov'
-    },
-    {
-        name: 'John Doe',
-        email: 'abc@example.com'
-
-    },
-    {
-        name: 'Jane Doe',
-        pic: 'https://bit.ly/dan-abramov',
-        email: 'abc@example.com'
-    },
-    {
-        name: 'John Smith',
-        pic: 'https://bit.ly/dan-abramov'
-    },
-    {
-        name: 'Jane Smith',
-        pic: 'https://bit.ly/dan-abramov'
-    },
-    {
-        name: 'John Doe',
-        email: 'abc@example.com'
-    },
-    {
-        name: 'Jane Doe',
-        pic: 'https://bit.ly/dan-abramov'
-    },
-    {
-        name: 'John Smith',
-        pic: 'https://bit.ly/dan-abramov',
-        email: 'abc@example.com'
-    },
-    {
-        name: 'Jane Smith',
-        email: 'abc@example.com'
-    },
-]
-
 
 const SideDrawer = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -109,6 +52,7 @@ const SideDrawer = () => {
             const { data } = await axios.get(`http://127.0.0.1:3030/api/v1/users?search=${search}`, config);
             setLoading(false);
             setSearchResults(data);
+            console.log(data);
         }
         catch (err) {
             toast({
@@ -123,6 +67,35 @@ const SideDrawer = () => {
         }
 
     }
+
+    const accessChat = async (id) => {
+        try {
+            setLoadingChat(true);
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${user.token}`,
+                }
+            }
+
+            const { data } = await axios.get(`http://1)`)
+            setLoadingChat(false);
+            setSearchResults(data);
+            console.log(data);
+        }
+        catch (err) {
+            toast({
+                title: "Error",
+                description: err.response.data.message,
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+                position: 'bottom-left'
+            })
+            setLoadingChat(false);
+        }
+    }
+
+
 
 
     return (
@@ -173,7 +146,9 @@ const SideDrawer = () => {
                                     searchResults.length === 0 ? <Text textAlign='center' mt='20px' color='gray.500'>No Results Found</Text> :
                                         searchResults.map((user, index) => {
                                             return (
-                                                <UserCard key={index} name={user.name} pic={user.pic} email={user.email} />
+                                                <UserCard key={index} name={user.name} pic={user.pic} email={user.email}
+                                                    handleFunction={() => { accessChat(user._id) }}
+                                                />
                                             )
                                         })
                                 // users.map((user, index) => {
@@ -185,14 +160,6 @@ const SideDrawer = () => {
                             }
                         </Box>
                     </DrawerBody>
-
-
-                    {/* <DrawerFooter>
-                        <Button variant='outline' mr={3} onClick={onClose}>
-                            Cancel
-                        </Button>
-                        <Button colorScheme='blue'>Save</Button>
-                    </DrawerFooter> */}
                 </DrawerContent>
             </Drawer >
         </>

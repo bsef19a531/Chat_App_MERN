@@ -35,7 +35,7 @@ const SideDrawer = () => {
     const [loadingChat, setLoadingChat] = useState(false)
     const toast = useToast();
 
-    const { user } = ChatState();
+    const { user, setSelectedChat, chat, SetChat } = ChatState();
 
     const handleSearch = async () => {
         if (!search) {
@@ -73,13 +73,14 @@ const SideDrawer = () => {
             setLoadingChat(true);
             const config = {
                 headers: {
+                    "Content-Type": "application/json",
                     Authorization: `Bearer ${user.token}`,
                 }
             }
 
-            const { data } = await axios.get(`http://1)`)
+            const { data } = await axios.post(`http://127.0.0.1:3030/api/v1/chats)`, { id }, config)
             setLoadingChat(false);
-            setSearchResults(data);
+            setSelectedChat(data);
             console.log(data);
         }
         catch (err) {
@@ -89,7 +90,7 @@ const SideDrawer = () => {
                 status: "error",
                 duration: 5000,
                 isClosable: true,
-                position: 'bottom-left'
+                position: 'top'
             })
             setLoadingChat(false);
         }

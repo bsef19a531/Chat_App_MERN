@@ -1,5 +1,6 @@
 import React from 'react'
 import UserCard from './UserCard'
+import ChatLoading from './ChatLoading'
 import {
     Drawer,
     DrawerBody,
@@ -12,13 +13,16 @@ import {
     InputGroup,
     IconButton,
     Box,
-    Text
+    Text,
+    Toast,
+    useToast
 } from '@chakra-ui/react'
 
 import { Button, Input, useDisclosure } from '@chakra-ui/react'
 import { Search2Icon, SearchIcon } from '@chakra-ui/icons'
 import { useState, useRef } from 'react'
-
+import { ChatState } from '../context/chatProvider'
+import axios from 'axios'
 
 //Dummy Data
 const users = [
@@ -86,6 +90,40 @@ const SideDrawer = () => {
     const [searchResults, setSearchResults] = useState([])
     const [loading, setLoading] = useState(false)
     const [loadingChat, setLoadingChat] = useState(false)
+    const toast = useToast();
+
+    const { user } = ChatState();
+
+    const handleSearch = async () => {
+        if (!search) {
+            return;
+        }
+        try {
+            setLoading(true);
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${user.token}`,
+                }
+            }
+
+            const { data } = await axios.get(`http://127.0.0.1:3030/api/v1/users?search=${search}`, config);
+            setLoading(false);
+            setSearchResults(data);
+        }
+        catch (err) {
+            toast({
+                title: "Error",
+                description: err.response.data.message,
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+                position: 'bottom-left'
+            })
+            setLoading(false);
+        }
+
+    }
+
 
     return (
         <>
@@ -111,7 +149,8 @@ const SideDrawer = () => {
                     <DrawerBody p='0px 8px 15px 8px' >
                         <Box position='sticky' top={0} zIndex="sticky">
                             <InputGroup bg='white' p='10px 0px' >
-                                <Input ref={searchField} placeholder='Search...' />
+                                <Input ref={searchField} placeholder='Search by name or email' onChange={(e) => { setSearch(e.target.value) }} value={search} />
+
                                 <IconButton
                                     bg='#669FF2'
                                     aria-label='Search database'
@@ -120,6 +159,7 @@ const SideDrawer = () => {
                                     _hover={{ bg: '#23BF83' }}
                                     _selected={{ bg: '#23BF83' }}
                                     _active={{ bg: '#23BF83' }}
+                                    onClick={handleSearch}
                                 />
                             </InputGroup>
                         </Box>
@@ -127,11 +167,21 @@ const SideDrawer = () => {
                         <Box m='8px 0px' bg='white' h='auto' w='100%' overflow='auto'>
                             {/* <UserCard name={name} pic={pic} /> */}
 
-                            {users.map((user, index) => {
-                                return (
-                                    <UserCard key={index} name={user.name} pic={user.pic} email={user.email} />
-                                )
-                            })}
+                            {
+                                loading ?
+                                    <ChatLoading /> :
+                                    searchResults.map((user, index) => {
+                                        return (
+                                            <UserCard key={index} name={user.name} pic={user.pic} email={user.email} />
+                                        )
+                                    })
+                                // users.map((user, index) => {
+                                //     return (
+                                //         <UserCard key={index} name={user.name} pic={user.pic} email={user.email} />
+                                //     )
+                                // })
+
+                            }
                         </Box>
                     </DrawerBody>
 

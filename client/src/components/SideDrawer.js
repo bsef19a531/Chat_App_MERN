@@ -3,7 +3,7 @@ import UserCard from './UserCard'
 import {
     Drawer,
     DrawerBody,
-    DrawerFooter,
+    // DrawerFooter,
     DrawerHeader,
     DrawerOverlay,
     DrawerContent,
@@ -11,11 +11,13 @@ import {
     Tooltip,
     InputGroup,
     IconButton,
-    Box
+    Box,
+    Text
 } from '@chakra-ui/react'
 
 import { Button, Input, useDisclosure } from '@chakra-ui/react'
 import { Search2Icon, SearchIcon } from '@chakra-ui/icons'
+import { useState, useRef } from 'react'
 
 
 //Dummy Data
@@ -78,14 +80,20 @@ const users = [
 
 const SideDrawer = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
-    const btnRef = React.useRef()
-    const searchField = React.useRef()
+    const btnRef = useRef()
+    const searchField = useRef()
+    const [search, setSearch] = useState('')
+    const [searchResults, setSearchResults] = useState([])
+    const [loading, setLoading] = useState(false)
+    const [loadingChat, setLoadingChat] = useState(false)
 
     return (
         <>
             <Tooltip hasArrow bg='#669FF2' label='Search for People to Chat' aria-label='Search' fontSize='md'>
                 <Button leftIcon={<Search2Icon />} ref={btnRef} colorScheme='teal' onClick={onOpen}>
-                    Search
+                    <Text display={{ base: 'none', md: 'flex' }}>
+                        Search
+                    </Text>
                 </Button>
             </Tooltip>
             <Drawer

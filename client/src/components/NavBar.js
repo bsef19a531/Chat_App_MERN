@@ -32,7 +32,7 @@ const NavBar = () => {
     return (
         <Box bg='#EAF0F7' w='100%' h='60px' p={4} display="flex" justifyContent="space-between" alignItems="center" position="sticky" top={0} zIndex="sticky" mb='5px' >
             <SideDrawer />
-            <Image src='inbox-logo.png' alt='Inbox-Logo' height='50px' />
+            <Image src='inbox-logo.png' alt='Inbox-Logo' height='50px' display={['none', 'block']} />
             <div>
                 <Menu>
                     <MenuButton p={1}>

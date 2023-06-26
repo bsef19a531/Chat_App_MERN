@@ -14,7 +14,7 @@ import {
 import SideDrawer from './SideDrawer';
 import { BellIcon, ChevronDownIcon } from '@chakra-ui/icons';
 import { ChatState } from '../context/chatProvider';
-import ProfileModal from './Authentication/ProfileModal';
+import ProfileModal from './ProfileModal';
 
 const NavBar = () => {
 

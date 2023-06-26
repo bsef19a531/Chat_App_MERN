@@ -1,6 +1,6 @@
 import React from 'react'
 import { ChatState } from '../context/chatProvider';
-import NavBar from '../components/Authentication/NavBar';
+import NavBar from '../components/NavBar';
 
 const Chat = () => {
     const { user } = ChatState();

@@ -1,4 +1,5 @@
 import React from 'react'
+import UserCard from './UserCard'
 import {
     Drawer,
     DrawerBody,
@@ -8,10 +9,14 @@ import {
     DrawerContent,
     DrawerCloseButton,
     Tooltip,
+    InputGroup,
+    IconButton,
+    Box
 } from '@chakra-ui/react'
 
 import { Button, Input, useDisclosure } from '@chakra-ui/react'
-import { Search2Icon } from '@chakra-ui/icons'
+import { Search2Icon, SearchIcon } from '@chakra-ui/icons'
+import { color } from 'framer-motion'
 
 
 const SideDrawer = () => {
@@ -21,7 +26,7 @@ const SideDrawer = () => {
 
     return (
         <>
-            <Tooltip hasArrow bg='#669FF2' label='Search for People to Chat with' aria-label='Search' fontSize='md'>
+            <Tooltip hasArrow bg='#669FF2' label='Search for People to Chat' aria-label='Search' fontSize='md'>
                 <Button leftIcon={<Search2Icon />} ref={btnRef} colorScheme='teal' onClick={onOpen}>
                     Search
                 </Button>
@@ -38,9 +43,27 @@ const SideDrawer = () => {
                     <DrawerCloseButton />
                     <DrawerHeader>Search People</DrawerHeader>
 
-                    <DrawerBody>
-                        <Input ref={searchField} placeholder='Search here...' />
+                    <DrawerBody p='0px 8px 15px 8px' >
+                        <Box position='sticky' top={0} zIndex="sticky">
+                            <InputGroup bg='white' p='10px 0px' >
+                                <Input ref={searchField} placeholder='Search...' />
+                                <IconButton
+                                    bg='#669FF2'
+                                    aria-label='Search database'
+                                    icon={<SearchIcon />}
+                                    color='white'
+                                    _hover={{ bg: '#23BF83' }}
+                                    _selected={{ bg: '#23BF83' }}
+                                    _active={{ bg: '#23BF83' }}
+                                />
+                            </InputGroup>
+                        </Box>
+
+                        <Box m='8px 0px' bg='#EAF0F7' h='100vh' w='100%' overflow='auto'>
+                            <UserCard />
+                        </Box>
                     </DrawerBody>
+
 
                     {/* <DrawerFooter>
                         <Button variant='outline' mr={3} onClick={onClose}>
@@ -49,7 +72,7 @@ const SideDrawer = () => {
                         <Button colorScheme='blue'>Save</Button>
                     </DrawerFooter> */}
                 </DrawerContent>
-            </Drawer>
+            </Drawer >
         </>
     )
 }

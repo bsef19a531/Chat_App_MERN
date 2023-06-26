@@ -16,7 +16,59 @@ import {
 
 import { Button, Input, useDisclosure } from '@chakra-ui/react'
 import { Search2Icon, SearchIcon } from '@chakra-ui/icons'
-import { color } from 'framer-motion'
+
+
+//Dummy Data
+const users = [
+    {
+        name: 'John Doe',
+        pic: 'https://bit.ly/dan-abramov'
+    },
+    {
+        name: 'Jane Doe',
+
+    },
+    {
+        name: 'John Smith',
+        pic: 'https://bit.ly/dan-abramov'
+    },
+    {
+        name: 'Jane Smith',
+        pic: 'https://bit.ly/dan-abramov'
+    },
+    {
+        name: 'John Doe',
+
+    },
+    {
+        name: 'Jane Doe',
+        pic: 'https://bit.ly/dan-abramov'
+    },
+    {
+        name: 'John Smith',
+        pic: 'https://bit.ly/dan-abramov'
+    },
+    {
+        name: 'Jane Smith',
+        pic: 'https://bit.ly/dan-abramov'
+    },
+    {
+        name: 'John Doe',
+
+    },
+    {
+        name: 'Jane Doe',
+        pic: 'https://bit.ly/dan-abramov'
+    },
+    {
+        name: 'John Smith',
+        pic: 'https://bit.ly/dan-abramov'
+    },
+    {
+        name: 'Jane Smith',
+
+    },
+]
 
 
 const SideDrawer = () => {
@@ -59,8 +111,14 @@ const SideDrawer = () => {
                             </InputGroup>
                         </Box>
 
-                        <Box m='8px 0px' bg='#EAF0F7' h='100vh' w='100%' overflow='auto'>
-                            <UserCard />
+                        <Box m='8px 0px' bg='white' h='auto' w='100%' overflow='auto'>
+                            {/* <UserCard name={name} pic={pic} /> */}
+
+                            {users.map((user, index) => {
+                                return (
+                                    <UserCard key={index} name={user.name} pic={user.pic} />
+                                )
+                            })}
                         </Box>
                     </DrawerBody>
 

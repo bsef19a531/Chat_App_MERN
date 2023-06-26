@@ -170,11 +170,12 @@ const SideDrawer = () => {
                             {
                                 loading ?
                                     <ChatLoading /> :
-                                    searchResults.map((user, index) => {
-                                        return (
-                                            <UserCard key={index} name={user.name} pic={user.pic} email={user.email} />
-                                        )
-                                    })
+                                    searchResults.length === 0 ? <Text textAlign='center' mt='20px' color='gray.500'>No Results Found</Text> :
+                                        searchResults.map((user, index) => {
+                                            return (
+                                                <UserCard key={index} name={user.name} pic={user.pic} email={user.email} />
+                                            )
+                                        })
                                 // users.map((user, index) => {
                                 //     return (
                                 //         <UserCard key={index} name={user.name} pic={user.pic} email={user.email} />

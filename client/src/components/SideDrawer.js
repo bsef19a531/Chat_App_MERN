@@ -22,11 +22,31 @@ import { Search2Icon, SearchIcon } from '@chakra-ui/icons'
 const users = [
     {
         name: 'John Doe',
-        pic: 'https://bit.ly/dan-abramov'
+        pic: 'https://bit.ly/dan-abramov',
+        email: 'abc@example.com'
     },
     {
         name: 'Jane Doe',
+        email: 'abc@example.com'
+    },
+    {
+        name: 'John Smith',
+        pic: 'https://bit.ly/dan-abramov',
+        email: 'abc@example.com'
+    },
+    {
+        name: 'Jane Smith',
+        pic: 'https://bit.ly/dan-abramov'
+    },
+    {
+        name: 'John Doe',
+        email: 'abc@example.com'
 
+    },
+    {
+        name: 'Jane Doe',
+        pic: 'https://bit.ly/dan-abramov',
+        email: 'abc@example.com'
     },
     {
         name: 'John Smith',
@@ -38,7 +58,7 @@ const users = [
     },
     {
         name: 'John Doe',
-
+        email: 'abc@example.com'
     },
     {
         name: 'Jane Doe',
@@ -46,27 +66,12 @@ const users = [
     },
     {
         name: 'John Smith',
-        pic: 'https://bit.ly/dan-abramov'
+        pic: 'https://bit.ly/dan-abramov',
+        email: 'abc@example.com'
     },
     {
         name: 'Jane Smith',
-        pic: 'https://bit.ly/dan-abramov'
-    },
-    {
-        name: 'John Doe',
-
-    },
-    {
-        name: 'Jane Doe',
-        pic: 'https://bit.ly/dan-abramov'
-    },
-    {
-        name: 'John Smith',
-        pic: 'https://bit.ly/dan-abramov'
-    },
-    {
-        name: 'Jane Smith',
-
+        email: 'abc@example.com'
     },
 ]
 
@@ -116,7 +121,7 @@ const SideDrawer = () => {
 
                             {users.map((user, index) => {
                                 return (
-                                    <UserCard key={index} name={user.name} pic={user.pic} />
+                                    <UserCard key={index} name={user.name} pic={user.pic} email={user.email} />
                                 )
                             })}
                         </Box>

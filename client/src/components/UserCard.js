@@ -9,7 +9,10 @@ const UserCard = (props) => {
                 <Flex alignItems='center' justifyContent='space-between' p='10px 15px' borderBottom='1px solid #EAF0F7'>
                     <Flex alignItems='center'>
                         <Avatar size='sm' name={props.name} src={props.pic} />
-                        <Text ml='10px' fontSize='md' fontWeight='bold'>{props.name}</Text>
+                        <Box>
+                            <Text ml='10px' fontSize='md' fontWeight='bold'>{props.name}</Text>
+                            <Text ml='10px' fontSize='10px' color='gray.500'>{props.email}</Text>
+                        </Box>
                     </Flex>
                     <IconButton
                         color='#23BF83'

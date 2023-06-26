@@ -9,11 +9,12 @@ import {
     MenuGroup,
     MenuOptionGroup,
     MenuDivider,
-    Button
-} from '@chakra-ui/react'
+    Button,
+} from '@chakra-ui/react';
 import SideDrawer from './SideDrawer';
 import { BellIcon, ChevronDownIcon } from '@chakra-ui/icons';
 import { ChatState } from '../context/chatProvider';
+import ProfileModal from './Authentication/ProfileModal';
 
 const NavBar = () => {
 
@@ -35,7 +36,11 @@ const NavBar = () => {
                         <Avatar name={user.name} src={user.pic} size='sm' cursor='pointer' />
                     </MenuButton>
                     <MenuList>
-                        <MenuItem>Profile</MenuItem>
+                        <ProfileModal user={user}>
+                            <MenuItem>
+                                User Profile
+                            </MenuItem>
+                        </ProfileModal>
                         <MenuDivider />
                         <MenuItem>Logout</MenuItem>
                     </MenuList>

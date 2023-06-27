@@ -15,7 +15,8 @@ import {
     Box,
     Text,
     Toast,
-    useToast
+    useToast,
+    Spinner
 } from '@chakra-ui/react'
 
 import { Button, Input, useDisclosure } from '@chakra-ui/react'
@@ -35,7 +36,7 @@ const SideDrawer = () => {
     const [loadingChat, setLoadingChat] = useState(false)
     const toast = useToast();
 
-    const { user, setSelectedChat, chat, SetChat } = ChatState();
+    const { user, setSelectedChat, chat, setChat } = ChatState();
 
     const handleSearch = async () => {
         if (!search) {
@@ -52,7 +53,7 @@ const SideDrawer = () => {
             const { data } = await axios.get(`http://127.0.0.1:3030/api/v1/users?search=${search}`, config);
             setLoading(false);
             setSearchResults(data);
-            console.log(data);
+            // console.log(data);
         }
         catch (err) {
             toast({
@@ -68,7 +69,7 @@ const SideDrawer = () => {
 
     }
 
-    const accessChat = async (id) => {
+    const accessChat = async (userId) => {
         try {
             setLoadingChat(true);
             const config = {
@@ -78,22 +79,48 @@ const SideDrawer = () => {
                 }
             }
 
-            const { data } = await axios.post(`http://127.0.0.1:3030/api/v1/chats)`, { id }, config)
-            setLoadingChat(false);
-            setSelectedChat(data);
+            const response = await axios.post(
+                `http://127.0.0.1:3030/api/v1/chats`,
+                { userId },
+                config
+            );
+            const { data } = response;
+
+            console.log("data");
             console.log(data);
+
+            if (!chat.find((c) => c._id === data._id)) setChat([data, ...chat]);
+            setSelectedChat(data);
+            setLoadingChat(false);
+            onClose();
+
+            // if (!chat.find(c => c._id === data._id)) {
+            //     SetChat(prev => [...prev, data]);
+            // }
+
+            // console.log("data");
+            // console.log(data);
+            // console.log("appended");
+            // console.log(chat);
+
+            // setLoadingChat(false);
+            // setSelectedChat(data);
+            // console.log(data);
         }
         catch (err) {
-            toast({
-                title: "Error",
-                description: err.response.data.message,
-                status: "error",
-                duration: 5000,
-                isClosable: true,
-                position: 'top'
-            })
-            setLoadingChat(false);
+            if (err.response && err.response.data && err.response.data.message) {
+                // Server responded with an error message
+                toast({
+                    title: "Error",
+                    description: err.response.data.message,
+                    status: "error",
+                    duration: 5000,
+                    isClosable: true,
+                    position: "top",
+                });
+            }
         }
+        setLoadingChat(false);
     }
 
 
@@ -102,7 +129,7 @@ const SideDrawer = () => {
     return (
         <>
             <Tooltip hasArrow bg='#669FF2' label='Search for People to Chat' aria-label='Search' fontSize='md'>
-                <Button leftIcon={<Search2Icon />} ref={btnRef} colorScheme='teal' onClick={onOpen}>
+                <Button leftIcon={<Search2Icon />} ref={btnRef} bg='#23BF83' _hover={{ bg: '#669FF2' }} onClick={onOpen}>
                     <Text display={{ base: 'none', md: 'flex' }}>
                         Search
                     </Text>
@@ -123,7 +150,7 @@ const SideDrawer = () => {
                     <DrawerBody p='0px 8px 15px 8px' >
                         <Box position='sticky' top={0} zIndex="sticky">
                             <InputGroup bg='white' p='10px 0px' >
-                                <Input ref={searchField} placeholder='Search by name or email' onChange={(e) => { setSearch(e.target.value) }} value={search} />
+                                <Input ref={searchField} placeholder='Search by name or email' onChange={(e) => { setSearch(e.target.value) }} value={search} borderRightRadius='0px' />
 
                                 <IconButton
                                     bg='#669FF2'
@@ -134,6 +161,7 @@ const SideDrawer = () => {
                                     _selected={{ bg: '#23BF83' }}
                                     _active={{ bg: '#23BF83' }}
                                     onClick={handleSearch}
+                                    borderLeftRadius='0px'
                                 />
                             </InputGroup>
                         </Box>
@@ -159,6 +187,7 @@ const SideDrawer = () => {
                                 // })
 
                             }
+                            {loadingChat && <Spinner ml='auto' display='flex' />}
                         </Box>
                     </DrawerBody>
                 </DrawerContent>

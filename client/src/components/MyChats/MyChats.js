@@ -80,7 +80,7 @@ const MyChats = () => {
                 display='flex'
                 py={3}
                 px={3}
-                fontSize={{ base: '20px', md: '28px' }}
+                fontSize={{ base: '20px', md: '24px' }}
                 justifyContent='space-between'
                 alignItems='center'
                 w='100%'

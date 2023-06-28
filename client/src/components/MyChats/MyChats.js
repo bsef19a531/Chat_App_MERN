@@ -110,6 +110,7 @@ const MyChats = () => {
                     <Stack spacing='1px' w='100%' overflowY='scroll' h='75vh'>
 
                         {chat.map((chatItem) => {
+
                             return (
                                 // <Box
                                 //     onClick={() => setSelectedChat(chatItem)}
@@ -123,11 +124,11 @@ const MyChats = () => {
 
 
                                 // </Box>)
-
-                                <ChatCard
+                                < ChatCard
                                     key={chatItem._id}
-                                    name={!chatItem.isGroup ? getSender(loggedUser, chatItem.users) : chatItem.chatName}
-                                    pic={chatItem.isGroup ? chatItem.chatImage : chatItem.users[0].pic}
+                                    name={!chatItem.isGroupChat ? getSender(loggedUser, chatItem.users) : chatItem.chatName
+                                    }
+                                    pic={chatItem.isGroupChat ? chatItem.chatImage : chatItem.users[0].pic}
                                     bg={SelectedChat === chatItem ? '#23BF83' : 'white'}
                                     color={SelectedChat === chatItem ? 'white' : 'black'}
                                     cursor='pointer'

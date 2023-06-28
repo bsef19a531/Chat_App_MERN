@@ -10,7 +10,7 @@ import GroupChatModal from '../GroupChatModal';
 
 const MyChats = () => {
 
-    const { user, setChat, SelectedChat, setSelectedChat, chat } = ChatState();
+    const { user, setChat, selectedChat, setSelectedChat, chat } = ChatState();
     const [loggedUser, setLoggedUser] = useState({});
     const toast = useToast();
 
@@ -62,8 +62,16 @@ const MyChats = () => {
 
     // console.log("From MyChats.js")
     // console.log(SelectedChat)
-    console.log(chat)
+    // console.log(chat)
 
+    const handleChatSelect = (chatItem) => {
+        setSelectedChat(chatItem);
+
+
+        console.log("From handleChat Select MyChats.js")
+        console.log(chatItem)
+        console.log(selectedChat)
+    }
 
     return (
         <Box
@@ -71,7 +79,7 @@ const MyChats = () => {
             w={{ base: '100%', md: '33.3%' }}
             h='96%'
             m='10px 7px 8px 8px'
-            display={{ base: SelectedChat ? 'none' : 'flex', md: 'flex' }}
+            display={{ base: !selectedChat ? 'flex' : 'none', md: 'block' }}
             flexDir='column'
             alignItems='center'
             bg='rgba(234, 240, 247, 0.7)'
@@ -110,6 +118,9 @@ const MyChats = () => {
                     <Stack spacing='1px' w='100%' overflowY='scroll' h='75vh'>
 
                         {chat.map((chatItem) => {
+                            console.log("From MyChats.js")
+                            console.log(chatItem)
+                            console.log(selectedChat)
 
                             return (
                                 // <Box
@@ -129,9 +140,10 @@ const MyChats = () => {
                                     name={!chatItem.isGroupChat ? getSender(loggedUser, chatItem.users) : chatItem.chatName
                                     }
                                     pic={chatItem.isGroupChat ? chatItem.chatImage : chatItem.users[0].pic}
-                                    bg={SelectedChat === chatItem ? '#23BF83' : 'white'}
-                                    color={SelectedChat === chatItem ? 'white' : 'black'}
+                                    bg={selectedChat === chatItem ? '#23BF83' : 'white'}
+                                    color={selectedChat === chatItem ? 'white' : 'black'}
                                     cursor='pointer'
+                                    handleFunction={(e) => { handleChatSelect(chatItem) }}
                                 />)
                         })}
                     </Stack>

@@ -5,7 +5,7 @@ import { ChevronRightIcon } from '@chakra-ui/icons'
 const UserCard = ({ name, pic, bg, color, handleFunction }) => {
     return (
         <>
-            <Box bg={bg} m='1px' border='solid 1px #669FF2' borderRadius='lg' color={color} cursor='pointer' _hover={{ bg: '#EAF0F7' }} onClick={handleFunction}>
+            <Box bg={bg} m='1px' border='solid 1px #669FF2' borderRadius='lg' color={color} cursor='pointer' _hover={{ bg: '#EAF0F7', color: 'black' }} onClick={handleFunction}>
                 <Flex alignItems='center' justifyContent='space-between' p='10px 15px' borderBottom='1px solid #EAF0F7'>
                     <Flex alignItems='center'>
                         <Avatar size='sm' name={name} src={pic} />

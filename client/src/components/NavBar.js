@@ -16,6 +16,7 @@ import { BellIcon, ChevronDownIcon } from '@chakra-ui/icons';
 import { ChatState } from '../context/chatProvider';
 import ProfileModal from './ProfileModal';
 import { useHistory } from 'react-router-dom';
+import ChatLoading from './ChatLoading';
 
 const NavBar = () => {
 
@@ -42,14 +43,29 @@ const NavBar = () => {
 
                 <Menu>
                     <MenuButton as={Button} rightIcon={<ChevronDownIcon />} p={1}>
-                        <Avatar name={user.name} src={user.pic} size='sm' cursor='pointer' />
+                        {/* <Avatar name={user.name} src={user.pic} size='sm' cursor='pointer' /> */}
+                        {user && ( // Add a conditional check for user object
+                            <Avatar name={user.name} src={user.pic} size="sm" cursor="pointer" />
+                        )}
                     </MenuButton>
                     <MenuList>
+                        {/* {user ? ( // Add a conditional check for user object
+                            <ProfileModal user={user}>
+                                <MenuItem>
+                                    User Profile
+                                </MenuItem>
+                            </ProfileModal>) :
+                            <ChatLoading />
+                        } */}
+
+
                         <ProfileModal user={user}>
                             <MenuItem>
                                 User Profile
                             </MenuItem>
                         </ProfileModal>
+
+
                         <MenuDivider />
                         <MenuItem onClick={logoutHandler}>Logout</MenuItem>
                     </MenuList>

@@ -6,6 +6,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import ChatLoading from '../ChatLoading';
 import ChatCard from '../ChatCard';
+import GroupChatModal from '../GroupChatModal';
 
 const MyChats = () => {
 
@@ -89,15 +90,18 @@ const MyChats = () => {
                 opacity={1.0}
             >
                 <Text>My Chats</Text>
-                <Button rightIcon={<AddIcon />}
-                    bg='#23BF83'
-                    _hover={{ bg: '#23BF83' }}
-                    variant='outline'
-                    color='white'
-                    fontSize={{ base: '10px', md: '10px', lg: '15px' }}
-                >
-                    Create Group
-                </Button>
+                <GroupChatModal >
+                    <Button rightIcon={<AddIcon />}
+                        bg='#23BF83'
+                        _hover={{ bg: '#23BF83' }}
+                        variant='outline'
+                        color='white'
+                        fontSize={{ base: '10px', md: '10px', lg: '15px' }}
+                    >
+                        Create Group
+
+                    </Button>
+                </GroupChatModal>
 
             </Box>
 

@@ -8,7 +8,7 @@ import ChatLoading from '../ChatLoading';
 import ChatCard from '../ChatCard';
 import GroupChatModal from '../GroupChatModal';
 
-const MyChats = () => {
+const MyChats = ({ fetchAgain }) => {
 
     const { user, setChat, selectedChat, setSelectedChat, chat } = ChatState();
     const [loggedUser, setLoggedUser] = useState({});
@@ -58,7 +58,7 @@ const MyChats = () => {
     useEffect(() => {
         setLoggedUser(JSON.parse(localStorage.getItem('userInfo')));
         fetchChats();
-    }, [])
+    }, [fetchAgain])
 
     // console.log("From MyChats.js")
     // console.log(SelectedChat)
@@ -97,7 +97,7 @@ const MyChats = () => {
                 borderBottomRadius='none'
                 opacity={1.0}
             >
-                <Text>My Chats</Text>
+                <Text color='white'>My Chats</Text>
                 <GroupChatModal >
                     <Button rightIcon={<AddIcon />}
                         bg='#23BF83'

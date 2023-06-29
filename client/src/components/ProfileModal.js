@@ -19,6 +19,7 @@ import { useDisclosure } from '@chakra-ui/react'
 const ProfileModal = ({ user, children }) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure()
+    // console.log(user);
 
     return (
         <>

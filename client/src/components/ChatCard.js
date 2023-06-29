@@ -2,7 +2,7 @@ import React from 'react'
 import { Box, Avatar, Text, Flex, IconButton } from '@chakra-ui/react'
 import { ChevronRightIcon } from '@chakra-ui/icons'
 
-const UserCard = ({ name, pic, bg, color, handleFunction }) => {
+const UserCard = ({ name, pic, bg, color, handleFunction, subText }) => {
     return (
         <>
             <Box bg={bg} m='1px' border='solid 1px #669FF2' borderRadius='lg' color={color} cursor='pointer' _hover={{ bg: '#EAF0F7', color: 'black' }} onClick={handleFunction}>
@@ -11,7 +11,7 @@ const UserCard = ({ name, pic, bg, color, handleFunction }) => {
                         <Avatar size='sm' name={name} src={pic} />
                         <Box>
                             <Text ml='10px' fontSize='md' fontWeight='bold'>{name}</Text>
-                            <Text ml='10px' fontSize='10px' color='gray.500'>placeholder</Text>
+                            <Text ml='10px' fontSize='10px' color='gray.500'>{subText}</Text>
                         </Box>
                     </Flex>
                     <IconButton

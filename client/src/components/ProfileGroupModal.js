@@ -8,13 +8,18 @@ import {
     ModalBody,
     ModalCloseButton,
     Button,
-    Image,
     Text,
     Flex,
     Box,
-    Avatar
+    Avatar,
+    Stack,
+    Input,
+    InputGroup,
+    IconButton,
+    FormControl,
+    FormLabel,
 } from '@chakra-ui/react'
-import { Divider } from '@chakra-ui/react'
+import { CheckIcon } from '@chakra-ui/icons'
 import UserCard from './ChatCard'
 
 import { useDisclosure } from '@chakra-ui/react'
@@ -30,7 +35,7 @@ const ProfileGroupModal = ({ chat, children }) => {
                 (<Button onClick={onOpen} >View</Button>
                 )}
 
-            <Modal isOpen={isOpen} onClose={onClose} closeOnOverlayClick={false} isCentered motionPreset='slideInRight'>
+            <Modal size='full' isOpen={isOpen} onClose={onClose} closeOnOverlayClick={false} isCentered motionPreset='slideInRight'>
                 <ModalOverlay />
                 <ModalContent>
                     <ModalHeader bg='teal.500'>
@@ -45,61 +50,73 @@ const ProfileGroupModal = ({ chat, children }) => {
                     <ModalBody maxH='420px' >
                         <Flex flexDirection='column' justifyContent='center' alignItems='center' position='relative' top='-85px' >
 
-                            {/* <Avatar position='relative' top='-80px' borderRadius='full' border='1px black solid' boxSize='150px' name={chat.chatName} alt={chat.chatName} />
-
-                            <Text position='relative' top='-65px' fontFamily='Open Sans' fontSize='4xl'>
-                                {chat.chatName}
-                            </Text>
-
-                            <Box bg='#EAF0F7' p='10px' m='10px' w='100%'>
-                                <Text fontFamily='Open Sans' fontSize='xl'>
-                                    Members
-                                </Text>
-                            </Box> */}
-
                             <Avatar borderRadius='full' border='1px black solid' boxSize='150px' name={chat.chatName} alt={chat.chatName} />
 
                             <Text fontFamily='Open Sans' fontSize='4xl'>
                                 {chat.chatName}
                             </Text>
 
-                            <Box bg='#EAF0F7' m='10px' w='100%'>
-                                <Text fontFamily='Open Sans' fontSize='xl' bg='#23BF83' p='10px' color='white'>
-                                    Admin
-                                </Text>
-                                <UserCard
-                                    name={chat.groupAdmin.name}
-                                    pic={chat.groupAdmin.profilePic}
-                                    bg='#EAF0F7'
-                                    color='black'
-                                />
-                                <Divider orientation='horizontal' />
-                                <Text fontFamily='Open Sans' fontSize='xl' bg='#23BF83' p='10px' color='white'>
-                                    Members
-                                </Text>
-                                <Box maxH='125px' overflowY='scroll'>
-                                    {chat.users.filter((user) => {
-                                        return user._id !== chat.groupAdmin._id
-                                    }).map((user) => {
-                                        return (
-                                            <UserCard
-                                                name={user.name}
-                                                pic={user.profilePic}
-                                                bg='#EAF0F7'
-                                                color='black'
-                                            />
-                                        )
-                                    }
-                                    )}
+                            <Stack direction='row' h='100%' width='100%'>
+                                <Box bg='#EAF0F7' m='10px' w='50%' maxH='300px'>
+                                    <Text fontFamily='Open Sans' fontSize='xl' bg='#23BF83' borderRadius='lg' borderBottomRadius='none' p='10px' color='white'>
+                                        Members
+                                    </Text>
+
+                                    <Box overflowY='scroll' maxHeight='100%'>
+                                        <UserCard
+                                            key={chat.groupAdmin._id}
+                                            name={chat.groupAdmin.name}
+                                            pic={chat.groupAdmin.profilePic}
+                                            bg='#EAF0F7'
+                                            color='black'
+                                            subText='Admin'
+                                        />
+                                        {chat.users.filter((user) => {
+                                            return user._id !== chat.groupAdmin._id
+                                        }).map((user) => {
+                                            return (
+                                                <UserCard
+                                                    key={user._id}
+                                                    name={user.name}
+                                                    pic={user.profilePic}
+                                                    bg='#EAF0F7'
+                                                    color='black'
+                                                    subText='Member'
+                                                />
+                                            )
+                                        }
+                                        )}
+                                    </Box>
                                 </Box>
-                            </Box>
+                                <Box width='50%'>
+                                    <FormControl>
+                                        <InputGroup bg='white' p='10px 0px' >
+                                            <Input placeholder='Change Group Name' onChange={(e) => { }} borderRightRadius='0px' />
+
+                                            <IconButton
+                                                bg='#23BF83'
+                                                aria-label='Search database'
+                                                icon={<CheckIcon />}
+                                                color='white'
+                                                _hover={{ bg: '#669FF2' }}
+                                                _selected={{ bg: '#669FF2' }}
+                                                _active={{ bg: '#669FF2' }}
+                                                onClick={() => { }}
+                                                borderLeftRadius='0px'
+                                            />
+                                        </InputGroup>
+                                    </FormControl>
+                                </Box>
+                            </Stack>
+
                         </Flex>
+
 
                     </ModalBody>
 
                     <ModalFooter>
-                        <Button bg='#669FF2' color="white" _hover={{ bg: '#23BF83' }} mr={3} onClick={onClose}>
-                            Close
+                        <Button bg='red' color="white" _hover={{ bg: 'red' }} mr={3} onClick={() => { }}>
+                            Leave Group
                         </Button>
                     </ModalFooter>
                 </ModalContent>

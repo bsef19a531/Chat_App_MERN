@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { ChatState } from '../../context/chatProvider';
 import { Box, IconButton, Text, Stack, Avatar, Spinner, FormControl, Input, InputGroup, InputRightElement } from '@chakra-ui/react';
 import { ArrowBackIcon, InfoIcon } from '@chakra-ui/icons';
@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { ArrowRightIcon } from '@chakra-ui/icons';
 import axios from 'axios';
 import { useToast } from '@chakra-ui/react';
+import './chatStyles.css';
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     const { user, selectedChat, setSelectedChat } = ChatState();
@@ -15,6 +16,12 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     const [loading, setLoading] = React.useState(false);
     const [newMessage, setNewMessage] = useState('')
     const toast = useToast();
+
+    console.log("selectedMessages", messages)
+
+    useEffect(() => {
+        fetchMessages();
+    }, [selectedChat, fetchAgain]);
 
     const getSender = (loggedUser, users) => {
 
@@ -35,7 +42,9 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     };
 
     const sendMessage = async (e) => {
-        if (e.key === 'Enter' && newMessage) {
+        // console.log("send message")
+
+        if ((e.key === 'Enter' || e._reactName === 'onClick') && newMessage) {
             try {
 
                 setLoading(true);
@@ -46,14 +55,16 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                     },
                 }
 
-                const { data } = await axios.post('/api/message/send', {
+                setNewMessage('');
+                const { data } = await axios.post('http://127.0.0.1:3030/api/v1/messages', {
                     content: newMessage,
                     chatId: selectedChat._id,
                 }, config);
 
-                setNewMessage('');
+
                 setMessages([...messages, data]);
                 setLoading(false);
+                console.log(data);
             }
             catch (err) {
                 toast({
@@ -67,6 +78,39 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             }
         }
     }
+
+    const fetchMessages = async () => {
+        if (!selectedChat) { return; }
+        try {
+            setLoading(true);
+            const config = {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${user.token}`,
+                }
+            }
+
+            setLoading(true);
+
+            const { data } = await axios.get(`http://127.0.0.1:3030/api/v1/messages/${selectedChat._id}`, config);
+
+            setMessages(data);
+            setLoading(false);
+            // console.log(data);
+        }
+        catch (err) {
+            toast({
+                title: "Unable to Load Chat Messages",
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+            })
+            setLoading(false);
+        }
+        // const { data } = await axios.get(`http://` + process.env.REACT_APP_API_URL + `/api/v1/messages/${selectedChat._id}`, config);
+
+    }
+
     const typingHandler = (e) => {
         setNewMessage(e.target.value);
         //Typing Indicator Logic
@@ -146,8 +190,14 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
                     {
                         !loading ?
-                            (<Box h="100%" bg='gray' m='2px 5px' borderRadius='lg' p='3px 5px' >
-
+                            (<Box h="100%" bg='gray' m='2px 5px' borderRadius='lg' p='3px 5px' maxH='100%' overflowY='scroll' >
+                                {messages.map((message) => {
+                                    return (
+                                        <div>
+                                            {message.content}
+                                        </div>
+                                    )
+                                })}
                             </Box>
                             ) : (<Spinner size="xl" alignItems='center' margin='auto' />)
 
@@ -157,8 +207,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                             <Input variant='filled' bg='white' placeholder='Type Message...' onChange={typingHandler}
                                 value={newMessage}
                             />
-                            <InputRightElement>
-                                <ArrowRightIcon onClick={sendMessage} cursor='pointer' color='green.500' />
+                            <InputRightElement cursor='pointer' onClick={sendMessage} >
+                                <ArrowRightIcon color='green.500' />
                             </InputRightElement>
                         </InputGroup>
                     </FormControl>

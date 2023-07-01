@@ -13,7 +13,7 @@ const Chat = () => {
         <Flex flexDirection="column" h="100vh" w='100%'>
             <NavBar />
 
-            <Flex flex="1">
+            <Flex flex="1" maxH='90%'>
                 <MyChats fetchAgain={fetchAgain} />
                 <ChatBox fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
             </Flex>

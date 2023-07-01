@@ -9,6 +9,7 @@ import { ArrowRightIcon } from '@chakra-ui/icons';
 import axios from 'axios';
 import { useToast } from '@chakra-ui/react';
 import './chatStyles.css';
+import ScrollableMessages from './ScrollableMessages';
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     const { user, selectedChat, setSelectedChat } = ChatState();
@@ -189,8 +190,9 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                     </Box>
 
                     {
+                        // #EAF0F7
                         !loading ?
-                            (<Box h="100%" bg='gray' m='2px 5px' borderRadius='lg' p='3px 5px' maxH='100%' overflowY='scroll' >
+                            (<Box h="100%" bg='' m='2px 5px' borderRadius='lg' p='3px 5px' maxH='100%' overflowY='scroll' >
                                 <ScrollableMessages messages={messages} />
                             </Box>
                             ) : (<Spinner size="xl" alignItems='center' margin='auto' />)

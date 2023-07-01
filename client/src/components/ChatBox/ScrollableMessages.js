@@ -12,7 +12,7 @@ const ScrollableMessages = ({ messages }) => {
 
     const isSameSender = (messages, m, i, userId) => {
         return (
-            i < messages.length - 1 && (messages[i + 1].sender._id !== m.sender._id || messages[i + 1].sender._id === undefined) && messages[i].sender._id === userId
+            i < messages.length - 1 && (messages[i + 1].sender._id !== m.sender._id || messages[i + 1].sender._id === undefined) && messages[i].sender._id !== userId
         )
     }
 
@@ -26,22 +26,42 @@ const ScrollableMessages = ({ messages }) => {
         <ScrollableFeed>
             {
                 messages && messages.map((m, i) => {
+
+                    const isCurrentUser = m.sender._id === user._id;
+                    const messageStyle = {
+                        backgroundColor: isCurrentUser ? '#2effaf' : '#a2c6fa',
+                        borderRadius: '20px',
+                        padding: '5px 15px',
+                        maxWidth: '90%',
+                        alignSelf: isCurrentUser ? 'flex-end' : 'flex-start',
+                        marginBottom: '3px',
+                        marginTop: '3px',
+
+                    };
+
                     return (
-                        <div style={{ display: 'flex' }} key={m._id}  >
+                        <div style={{ display: 'flex', flexDirection: isCurrentUser ? 'row-reverse' : 'row', alignItems: 'center', }} key={m._id}  >
                             {
                                 (isSameSender(messages, m, i, user._id)
                                     || isLastMessage(messages, i, user._id)) &&
                                 (
                                     <Tooltip label={m.sender.name} placement='bottom-start' hasArrow  >
-                                        <Avatar cursor='pointer' size='sm' mt='7px' mr={1} name={m.sender.name} src={m.sender.pic} />
+                                        <Avatar cursor='pointer' size='sm' mr={1} name={m.sender.name} src={m.sender.pic} />
                                     </Tooltip>
                                 )
                             }
+
+                            {/* <span style={{ backgroundColor: `${m.sender._id === user._id ? "#23BF83" : "#669FF2"}`, borderRadius: '20px', padding: '5px 15px', maxWidth: '75%', alignSelf: `${m.sender._id === user._id ? 'flex-end' : 'flex-start'}` }}  >
+                                {m.content}
+                            </span> */}
+
+                            <span style={messageStyle}>{m.content}</span>
+
                         </div>
                     )
                 })
             }
-        </ScrollableFeed>
+        </ScrollableFeed >
     )
 }
 

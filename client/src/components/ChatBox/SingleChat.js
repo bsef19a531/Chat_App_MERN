@@ -191,13 +191,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                     {
                         !loading ?
                             (<Box h="100%" bg='gray' m='2px 5px' borderRadius='lg' p='3px 5px' maxH='100%' overflowY='scroll' >
-                                {messages.map((message) => {
-                                    return (
-                                        <div>
-                                            {message.content}
-                                        </div>
-                                    )
-                                })}
+                                <ScrollableMessages messages={messages} />
                             </Box>
                             ) : (<Spinner size="xl" alignItems='center' margin='auto' />)
 
